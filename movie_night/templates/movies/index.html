@@ -8,6 +8,13 @@
 </head>
 <body>
   <h1>Todays Movies</h1>
+  <div class="account">
+    {% if user.is_authenticated %}
+    Hi {{ user.username }}!
+    {% else %}
+    <a href="{% url 'login' %}">Log In</a>
+    {% endif %}
+  </div>
   <ul>
   {% for movie in movies %}
     <li>
