@@ -8,6 +8,7 @@ def _get_movies(search_string="time"):
     TODO: add pagination option
     """
     api_key = "2610afcc"
+    # https://pypi.org/project/requests/
     movies_response = requests.get(
         f"https://omdbapi.com/?s={search_string}&apikey={api_key}"
     )
@@ -22,7 +23,7 @@ def index(request):
     """
     context = {}
     movies = _get_movies()
-    context["newsdata"] = movies
+    context["movies"] = movies
     print(movies)
 
     return render(request, "movies/index.html", context)

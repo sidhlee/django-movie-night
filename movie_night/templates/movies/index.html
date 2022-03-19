@@ -8,5 +8,14 @@
 </head>
 <body>
   <h1>Todays Movies</h1>
+  <ul>
+  {% for movie in movies %}
+    <li>
+      <h2>{{movie.Title}}</h2>
+      <img src="{{movie.Poster}}" />
+      <p>Year: {{movie.Year}}</p>
+    </li>
+  {% endfor %}
+</ul>
 </body>
 </html>
