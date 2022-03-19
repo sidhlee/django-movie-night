@@ -10,12 +10,14 @@
   <h1>{{movie.Title}}</h1>
   <p><a href="{% url 'index' %}">Back to main</a></p>
    <div class="add-to-favorite">
-    {% if user.is_authenticated %}
-    <form method='POST' action="{% url 'foobar:favourite_post' movie.id %}">
+    {% if user.is_authenticated and is_favorite == None %}
+    <form method='POST' action="{% url 'favorites' movie.imdbID %}">
       {% csrf_token %}
-      <input type='hidden' name='movie' value={{ movie.Title }}>
+      <input type='hidden' name='movie' value={{ movie.imdbID }}>
       <button type='submit'>Add to Favorite</button>
     </form>
+    {% elif user.is_authenticated and is_favorite %}
+    <p>Added to Favorite</p>
     {% else %}
     <a href="{% url 'login' %}?next={{ request.get_full_path|urlencode }}">Log in to Add movie</a>
     {% endif %}

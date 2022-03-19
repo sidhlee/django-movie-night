@@ -1,5 +1,7 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 import requests
+from .models import Movie, UserMovie
 
 
 TEST_MOVIES = [
@@ -157,8 +159,38 @@ def movie_detail(request, movie_id):
     Renders details with the given movie id.
     """
     context = {}
+    if request.user.is_authenticated:
+        user_movies = UserMovie.objects.filter(
+            user=request.user, movie__imdb_id=movie_id
+        )
+        if user_movies:
+            context["is_favorite"] = True
+
     movie = _get_movie_by_id(movie_id)
-    # movie = TEST_MOVIE
     context["movie"] = movie
+    # movie = TEST_MOVIE
 
     return render(request, "movies/detail.html", context)
+
+
+@login_required
+def favorites(request, movie_id):
+    # TODO: validate movie exists
+    if request.method == "POST":
+        movie = _get_movie_by_id(movie_id)
+        movie_model = Movie.objects.create(
+            imdb_id=movie_id,
+            title=movie["Title"],
+            poster=movie["Poster"],
+            year=int(movie["Year"]),
+        )
+        UserMovie.objects.create(user=request.user, movie=movie_model)
+        return render(
+            request, "movies/detail.html", {"movie": movie, "is_favorite": True}
+        )
+    elif request.method == "GET":
+        print("GET favorite movies")
+        favorite_movies = UserMovie.objects.filter(user=request.user)
+        context = {}
+        context["movies"] = favorite_movies
+        return render(request, "movies/favorites.html", context)
