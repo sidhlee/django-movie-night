@@ -11,9 +11,11 @@
   <ul>
   {% for movie in movies %}
     <li>
-      <h2>{{movie.Title}}</h2>
-      <img src="{{movie.Poster}}" />
-      <p>Year: {{movie.Year}}</p>
+      <a href="{% url 'detail' movie.imdbID %}">
+        <h2>{{movie.Title}}</h2>
+        <img src="{{movie.Poster}}" />
+        <p>Year: {{movie.Year}}</p>
+      </a>
     </li>
   {% endfor %}
 </ul>

@@ -157,8 +157,8 @@ def movie_detail(request, movie_id):
     Renders details with the given movie id.
     """
     context = {}
-    # movie = _get_movie_by_id(movie_id)
-    movie = TEST_MOVIE
+    movie = _get_movie_by_id(movie_id)
+    # movie = TEST_MOVIE
     context["movie"] = movie
 
     return render(request, "movies/detail.html", context)
