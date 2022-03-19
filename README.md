@@ -16,6 +16,12 @@ user story
 
 - user can search by the title
 
+## Test Users
+
+All test user password is set to "movienight"
+
+- test1
+
 ## References
 
 - https://learndjango.com/tutorials/django-login-and-logout-tutorial
