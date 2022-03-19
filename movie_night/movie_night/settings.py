@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.template.context_processors",
     "movie.apps.MovieConfig",
     "accounts.apps.AccountsConfig",
 ]
@@ -53,7 +54,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "movie_night.urls"
 
-LOGIN_REDIRECT_URL = "/movies"
 LOGOUT_REDIRECT_URL = "/"
 
 TEMPLATES = [

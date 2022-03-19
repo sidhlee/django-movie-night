@@ -13,7 +13,7 @@
     Hi {{ user.username }}!
     <p><a href="{% url 'logout' %}">Log Out</a></p>
     {% else %}
-    <a href="{% url 'login' %}">Log In</a>
+    <a href="{% url 'login' %}?next={{ request.get_full_path|urlencode }}">Log In</a>
     {% endif %}
   </div>
   <ul>
