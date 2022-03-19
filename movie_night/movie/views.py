@@ -75,30 +75,90 @@ TEST_MOVIES = [
     },
 ]
 
+TEST_MOVIE = {
+    "Title": "Once Upon a Time... In Hollywood",
+    "Year": "2019",
+    "Rated": "R",
+    "Released": "26 Jul 2019",
+    "Runtime": "161 min",
+    "Genre": "Comedy, Drama",
+    "Director": "Quentin Tarantino",
+    "Writer": "Quentin Tarantino",
+    "Actors": "Leonardo DiCaprio, Brad Pitt, Margot Robbie",
+    "Plot": "A faded television actor and his stunt double strive to achieve fame and success in the final years of Hollywood's Golden Age in 1969 Los Angeles.",
+    "Language": "English, Italian, Spanish, German",
+    "Country": "United States, United Kingdom, China",
+    "Awards": "Won 2 Oscars. 143 wins & 380 nominations total",
+    "Poster": "https://m.media-amazon.com/images/M/MV5BOTg4ZTNkZmUtMzNlZi00YmFjLTk1MmUtNWQwNTM0YjcyNTNkXkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_SX300.jpg",
+    "Ratings": [
+        {"Source": "Internet Movie Database", "Value": "7.6/10"},
+        {"Source": "Rotten Tomatoes", "Value": "85%"},
+        {"Source": "Metacritic", "Value": "83/100"},
+    ],
+    "Metascore": "83",
+    "imdbRating": "7.6",
+    "imdbVotes": "671,685",
+    "imdbID": "tt7131622",
+    "Type": "movie",
+    "DVD": "27 Aug 2019",
+    "BoxOffice": "$142,502,728",
+    "Production": "N/A",
+    "Website": "N/A",
+    "Response": "True",
+}
+
+API_KEY = "2610afcc"
+
+default_options = {"search": "time"}
+
 # Create your views here.
 def _get_movies(search_string="time"):
     """
     get 10 movies with the given search string.
-    TODO: add pagination option
+    TODO:
+        - add pagination option
+        - add validation to search_string
     """
     api_key = "2610afcc"
     # https://pypi.org/project/requests/
     movies_response = requests.get(
-        f"https://omdbapi.com/?s={search_string}&apikey={api_key}"
+        f"https://omdbapi.com/?s={search_string}&apikey={API_KEY}"
     )
     movies_dict = movies_response.json()
     movies_list = movies_dict.get("Search", [])
     return movies_list
 
 
+def _get_movie_by_id(movie_id):
+    """
+    Get the movie by its imdbID
+    TODO: validate args
+    """
+    params = {"i": movie_id, "apiKey": API_KEY}
+    movie_response = requests.get("https://omdbapi.com/", params=params)
+    movie_dict = movie_response.json()
+    return movie_dict
+
+
 def index(request):
     """
-    Renders html inside templates folder
+    Renders html inside templates folder.
     """
     context = {}
     # movies = _get_movies()
     movies = TEST_MOVIES
     context["movies"] = movies
-    print(movies)
 
     return render(request, "movies/index.html", context)
+
+
+def movie_detail(request, movie_id):
+    """
+    Renders details with the given movie id.
+    """
+    context = {}
+    # movie = _get_movie_by_id(movie_id)
+    movie = TEST_MOVIE
+    context["movie"] = movie
+
+    return render(request, "movies/detail.html", context)
