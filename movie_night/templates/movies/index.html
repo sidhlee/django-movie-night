@@ -11,6 +11,7 @@
   <div class="account">
     {% if user.is_authenticated %}
     Hi {{ user.username }}!
+    <p><a href="{% url 'logout' %}">Log Out</a></p>
     {% else %}
     <a href="{% url 'login' %}">Log In</a>
     {% endif %}

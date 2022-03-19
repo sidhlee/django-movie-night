@@ -54,6 +54,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = "movie_night.urls"
 
 LOGIN_REDIRECT_URL = "/movies"
+LOGOUT_REDIRECT_URL = "/"
 
 TEMPLATES = [
     {
